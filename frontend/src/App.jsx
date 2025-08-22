@@ -14,6 +14,11 @@ import {
   Eye,
   EyeOff
 } from 'lucide-react';
+import LoginPage from './components/LoginPage';
+import RegisterPage from './components/RegisterPage';
+import BusinessSetupPage from './components/BusinessSetupPage';
+import DashboardPage from './components/DashboardPage';
+
 
 const API_BASE = 'http://localhost:5000/api';
 
@@ -603,775 +608,106 @@ function App() {
   }, []);
 
   // Loading screen
-  if (isLoading) {
-    return (
-      <div style={{...styles.gradientBg, ...styles.flexCenter}}>
-        <div style={styles.textCenter}>
-          <Loader style={styles.spin} size={48} color="#2563eb" />
-          <p style={{color: '#6b7280', marginTop: '1rem'}}>Loading SmallBiz Growth Hub...</p>
-        </div>
+if (isLoading) {
+  return (
+    <div style={{
+      minHeight: '100vh',
+      width: '100vw',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'linear-gradient(120deg, #f4f4f5 0%, #e5e7eb 100%)'
+    }}>
+      <div style={{
+        textAlign: 'center',
+        fontFamily: 'Inter, Playfair Display, serif, system-ui, sans-serif',
+        color: '#22223b'
+      }}>
+        <Loader style={{animation: 'spin 1s linear infinite'}} size={48} color="#c9ada7" />
+        <p style={{color: '#6b7280', marginTop: '1rem', fontSize: '1.1rem'}}>Loading Grogent...</p>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   // Login Page
-  if (currentPage === 'login') {
-    return (
-      <div style={{...styles.gradientBg, ...styles.flexCenter, padding: '1rem'}}>
-        <div style={{...styles.card, width: '100%', maxWidth: '400px'}}>
-          <div style={{...styles.textCenter, marginBottom: '2rem'}}>
-            <TrendingUp size={64} color="#2563eb" style={{margin: '0 auto 1rem'}} />
-            <h1 style={styles.title}>SmallBiz Growth Hub</h1>
-            <p style={styles.subtitle}>Grow your business with AI-powered insights</p>
-          </div>
-
-          {success && (
-            <div style={styles.alertSuccess}>
-              <p style={{margin: 0, fontSize: '0.875rem'}}>{success}</p>
-            </div>
-          )}
-
-          {errors.general && (
-            <div style={styles.alertError}>
-              <p style={{margin: 0, fontSize: '0.875rem'}}>{errors.general}</p>
-            </div>
-          )}
-
-          <form onSubmit={handleLogin}>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Email</label>
-              <input
-                type="email"
-                value={authForm.email}
-                onChange={(e) => setAuthForm(prev => ({ ...prev, email: e.target.value }))}
-                style={styles.input}
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Password</label>
-              <div style={styles.relative}>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={authForm.password}
-                  onChange={(e) => setAuthForm(prev => ({ ...prev, password: e.target.value }))}
-                  style={{...styles.input, paddingRight: '2.5rem'}}
-                  placeholder="Enter your password"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  style={{
-                    ...styles.absolute,
-                    right: '0.75rem',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    color: '#9ca3af'
-                  }}
-                >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
-              </div>
-            </div>
-
-            <button type="submit" style={styles.btnPrimary} className="btn-primary">
-              <LogIn size={16} />
-              Login
-            </button>
-          </form>
-
-          <div style={{...styles.textCenter, marginTop: '1.5rem'}}>
-            <p style={{color: '#6b7280', marginBottom: '0.5rem'}}>Don't have an account?</p>
-            <button
-              onClick={() => setCurrentPage('register')}
-              style={styles.btnLink}
-              className="btn-link"
-            >
-              Create Account
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+ if (currentPage === 'login') {
+  return (
+    <LoginPage
+      styles={styles}
+      authForm={authForm}
+      setAuthForm={setAuthForm}
+      showPassword={showPassword}
+      setShowPassword={setShowPassword}
+      handleLogin={handleLogin}
+      success={success}
+      errors={errors}
+      setCurrentPage={setCurrentPage}
+    />
+  );
+}
 
   // Register Page
   if (currentPage === 'register') {
-    return (
-      <div style={{...styles.gradientBg, ...styles.flexCenter, padding: '1rem'}}>
-        <div style={{...styles.card, width: '100%', maxWidth: '400px'}}>
-          <div style={{...styles.textCenter, marginBottom: '1.5rem'}}>
-            <UserPlus size={48} color="#2563eb" style={{margin: '0 auto 0.75rem'}} />
-            <h2 style={{...styles.title, fontSize: '1.5rem'}}>Create Account</h2>
-            <p style={styles.subtitle}>Join thousands of growing businesses</p>
-          </div>
-
-          {errors.general && (
-            <div style={styles.alertError}>
-              <p style={{margin: 0, fontSize: '0.875rem'}}>{errors.general}</p>
-            </div>
-          )}
-
-          <form onSubmit={handleRegister}>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Full Name</label>
-              <input
-                type="text"
-                value={authForm.full_name}
-                onChange={(e) => setAuthForm(prev => ({ ...prev, full_name: e.target.value }))}
-                style={styles.input}
-                placeholder="Enter your full name"
-                required
-              />
-            </div>
-
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Email</label>
-              <input
-                type="email"
-                value={authForm.email}
-                onChange={(e) => setAuthForm(prev => ({ ...prev, email: e.target.value }))}
-                style={styles.input}
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Password</label>
-              <div style={styles.relative}>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={authForm.password}
-                  onChange={(e) => setAuthForm(prev => ({ ...prev, password: e.target.value }))}
-                  style={{...styles.input, paddingRight: '2.5rem'}}
-                  placeholder="Create a password"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  style={{
-                    ...styles.absolute,
-                    right: '0.75rem',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    color: '#9ca3af'
-                  }}
-                >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
-              </div>
-              {errors.password && (
-                <p style={{color: '#ef4444', fontSize: '0.75rem', margin: '0.25rem 0 0 0'}}>{errors.password}</p>
-              )}
-            </div>
-
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Confirm Password</label>
-              <input
-                type="password"
-                value={authForm.confirmPassword}
-                onChange={(e) => setAuthForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                style={styles.input}
-                placeholder="Confirm your password"
-                required
-              />
-            </div>
-
-            <button type="submit" style={styles.btnPrimary} className="btn-primary">
-              <UserPlus size={16} />
-              Create Account
-            </button>
-          </form>
-
-          <div style={{...styles.textCenter, marginTop: '1.5rem'}}>
-            <p style={{color: '#6b7280', marginBottom: '0.5rem'}}>Already have an account?</p>
-            <button
-              onClick={() => setCurrentPage('login')}
-              style={styles.btnLink}
-              className="btn-link"
-            >
-              Sign In
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <RegisterPage
+      styles={styles}
+      authForm={authForm}
+      setAuthForm={setAuthForm}
+      showPassword={showPassword}
+      setShowPassword={setShowPassword}
+      handleRegister={handleRegister}
+      errors={errors}
+      setCurrentPage={setCurrentPage}
+    />
+  );
+}
 
   // Business Setup Page
   if (currentPage === 'business-setup') {
-    const industries = [
-      'Fashion & Apparel',
-      'Food & Beverages',
-      'Technology',
-      'Beauty & Personal Care',
-      'Electronics',
-      'Home & Garden',
-      'Fitness & Health',
-      'Education & Training',
-      'Automotive',
-      'Jewelry & Accessories'
-    ];
-
-    const budgetRanges = [
-      'Under ₹10,000',
-      '₹10,000 - ₹50,000',
-      '₹50,000 - ₹2,00,000',
-      '₹2,00,000 - ₹5,00,000',
-      'Above ₹5,00,000'
-    ];
-
-    const platforms = [
-      'Instagram',
-      'Facebook',
-      'Amazon',
-      'Flipkart',
-      'YouTube',
-      'WhatsApp Business',
-      'Website',
-      'Physical Store'
-    ];
-
-    return (
-      <div style={{...styles.gradientBg, padding: '1rem', minHeight: '100vh'}}>
-        <div style={styles.container}>
-          {/* Header */}
-          <div style={{...styles.cardSmall, ...styles.mb6}}>
-            <div style={styles.flexBetween}>
-              <div style={styles.flex}>
-                <Building2 size={32} color="#2563eb" style={{marginRight: '0.75rem'}} />
-                <div>
-                  <h1 style={{...styles.title, fontSize: '1.5rem', margin: 0}}>Business Setup</h1>
-                  <p style={{...styles.subtitle, fontSize: '1rem', margin: 0}}>Tell us about your business for personalized insights</p>
-                </div>
-              </div>
-              <div style={{...styles.flex, fontSize: '0.875rem', color: '#6b7280'}}>
-                <User size={16} style={{marginRight: '0.25rem'}} />
-                {user?.full_name}
-                <button onClick={handleLogout} style={{...styles.btnLink, marginLeft: '1rem'}} className="btn-link">
-                  Logout
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Business Form */}
-          <div style={styles.card}>
-            {success && (
-              <div style={{...styles.alertSuccess, ...styles.flex, marginBottom: '1.5rem'}}>
-                <CheckCircle size={20} color="#059669" style={{marginRight: '0.5rem'}} />
-                <p style={{margin: 0}}>{success}</p>
-              </div>
-            )}
-
-            {errors.general && (
-              <div style={{...styles.alertError, ...styles.flex, marginBottom: '1.5rem'}}>
-                <AlertCircle size={20} color="#dc2626" style={{marginRight: '0.5rem'}} />
-                <p style={{margin: 0}}>{errors.general}</p>
-              </div>
-            )}
-
-            <form onSubmit={handleBusinessSetup}>
-              <div style={{...styles.grid2, marginBottom: '1.5rem'}}>
-                <div style={styles.formGroup}>
-                  <label style={styles.label}>
-                    Business Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={businessForm.business_name}
-                    onChange={(e) => setBusinessForm(prev => ({ ...prev, business_name: e.target.value }))}
-                    style={styles.input}
-                    placeholder="e.g., Artisan Jewelry Studio"
-                    required
-                  />
-                </div>
-
-                <div style={styles.formGroup}>
-                  <label style={styles.label}>
-                    Industry *
-                  </label>
-                  <select
-                    value={businessForm.industry}
-                    onChange={(e) => setBusinessForm(prev => ({ ...prev, industry: e.target.value }))}
-                    style={styles.select}
-                    required
-                  >
-                    <option value="">Select your industry</option>
-                    {industries.map(industry => (
-                      <option key={industry} value={industry}>{industry}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div style={{...styles.formGroup, marginBottom: '1.5rem'}}>
-                <label style={styles.label}>
-                  Business Description *
-                </label>
-                <textarea
-                  value={businessForm.description}
-                  onChange={(e) => setBusinessForm(prev => ({ ...prev, description: e.target.value }))}
-                  style={{...styles.textarea, height: '100px'}}
-                  placeholder="Describe your products/services, what makes you unique..."
-                  required
-                />
-              </div>
-
-              <div style={{...styles.grid2, marginBottom: '1.5rem'}}>
-                <div style={styles.formGroup}>
-                  <label style={styles.label}>
-                    Target Audience
-                  </label>
-                  <input
-                    type="text"
-                    value={businessForm.target_audience}
-                    onChange={(e) => setBusinessForm(prev => ({ ...prev, target_audience: e.target.value }))}
-                    style={styles.input}
-                    placeholder="e.g., Young professionals, Mothers, Students"
-                  />
-                </div>
-
-                <div style={styles.formGroup}>
-                  <label style={styles.label}>
-                    Marketing Budget
-                  </label>
-                  <select
-                    value={businessForm.budget_range}
-                    onChange={(e) => setBusinessForm(prev => ({ ...prev, budget_range: e.target.value }))}
-                    style={styles.select}
-                  >
-                    <option value="">Select budget range</option>
-                    {budgetRanges.map(range => (
-                      <option key={range} value={range}>{range}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div style={{marginBottom: '1.5rem'}}>
-                <label style={styles.label}>
-                  Current Platforms (Select all that apply)
-                </label>
-                <div style={styles.grid4}>
-                  {platforms.map(platform => (
-                    <label key={platform} style={styles.flex}>
-                      <input
-                        type="checkbox"
-                        checked={businessForm.current_platforms.includes(platform)}
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            setBusinessForm(prev => ({
-                              ...prev,
-                              current_platforms: [...prev.current_platforms, platform]
-                            }));
-                          } else {
-                            setBusinessForm(prev => ({
-                              ...prev,
-                              current_platforms: prev.current_platforms.filter(p => p !== platform)
-                            }));
-                          }
-                        }}
-                        style={{marginRight: '0.5rem'}}
-                      />
-                      <span style={{fontSize: '0.875rem', color: '#374151'}}>{platform}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{...styles.formGroup, marginBottom: '1.5rem'}}>
-                <label style={styles.label}>
-                  Business Goals
-                </label>
-                <textarea
-                  value={businessForm.goals}
-                  onChange={(e) => setBusinessForm(prev => ({ ...prev, goals: e.target.value }))}
-                  style={{...styles.textarea, height: '80px'}}
-                  placeholder="What do you want to achieve? (e.g., increase sales, brand awareness, customer base)"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isAnalyzing}
-                style={{
-                  ...styles.btnSuccess,
-                  opacity: isAnalyzing ? 0.5 : 1,
-                  cursor: isAnalyzing ? 'not-allowed' : 'pointer'
-                }}
-                className="btn-success"
-              >
-                {isAnalyzing ? (
-                  <>
-                    <Loader style={styles.spin} size={16} />
-                    Analyzing Your Business...
-                  </>
-                ) : (
-                  <>
-                    <Target size={16} />
-                    Start My Business Analysis
-                  </>
-                )}
-              </button>
-            </form>
-
-            <div style={{...styles.textCenter, marginTop: '1rem'}}>
-              <button
-                onClick={() => setCurrentPage('login')}
-                style={{...styles.btnLink, fontSize: '0.875rem'}}
-                className="btn-link"
-              >
-                ← Back to Login
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <BusinessSetupPage
+      styles={styles}
+      user={user}
+      businessForm={businessForm}
+      setBusinessForm={setBusinessForm}
+      handleBusinessSetup={handleBusinessSetup}
+      handleLogout={handleLogout}
+      isAnalyzing={isAnalyzing}
+      success={success}
+      errors={errors}
+      setCurrentPage={setCurrentPage}
+    />
+  );
+}
 
   // Dashboard Page
   if (currentPage === 'dashboard' && business) {
-    return (
-      <div style={{backgroundColor: '#f9fafb', padding: '1rem', minHeight: '100vh'}}>
-        <div style={styles.container}>
-          {/* Header */}
-          <div style={{...styles.cardSmall, ...styles.mb6}}>
-            <div style={styles.flexBetween}>
-              <div style={styles.flex}>
-                <TrendingUp size={32} color="#2563eb" style={{marginRight: '0.75rem'}} />
-                <div>
-                  <h1 style={{...styles.title, fontSize: '2rem', margin: 0}}>{business.business_name}</h1>
-                  <p style={{...styles.subtitle, margin: 0}}>{business.industry} • {business.description}</p>
-                </div>
-              </div>
-              <div style={{...styles.flex, gap: '1rem'}}>
-                <div style={{textAlign: 'right'}}>
-                  <p style={{fontSize: '0.875rem', color: '#6b7280', margin: 0}}>Welcome back,</p>
-                  <p style={{fontWeight: '500', color: '#111827', margin: 0}}>{user?.full_name}</p>
-                </div>
-                <button
-                  onClick={handleLogout}
-                  style={styles.btnSecondary}
-                  className="btn-secondary"
-                >
-                  Logout
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {isAnalyzing && (
-            <div style={{...styles.alertInfo, ...styles.flex, marginBottom: '1.5rem'}}>
-              <Loader style={styles.spin} size={24} color="#2563eb" />
-              <div style={{marginLeft: '0.75rem'}}>
-                <h3 style={{fontWeight: '500', color: '#1e40af', margin: '0 0 0.25rem 0'}}>Analyzing Your Market...</h3>
-                <p style={{color: '#2563eb', fontSize: '0.875rem', margin: 0}}>This may take 1-2 minutes. We're gathering insights from multiple platforms.</p>
-              </div>
-            </div>
-          )}
-
-          {/* Platform Analytics */}
-          <div style={{...styles.grid2, marginBottom: '1.5rem'}}>
-            <div style={styles.card}>
-              <div style={{...styles.flex, marginBottom: '1rem'}}>
-                <BarChart3 size={24} color="#2563eb" style={{marginRight: '0.5rem'}} />
-                <h2 style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0}}>Platform Recommendations</h2>
-              </div>
-              
-              {analytics.length > 0 ? (
-                <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-                  {analytics.slice(0, 4).map((platform, index) => (
-                    <div key={index} style={{border: '1px solid #e5e7eb', borderRadius: '8px', padding: '1rem'}}>
-                      <div style={{...styles.flexBetween, marginBottom: '0.5rem'}}>
-                        <h3 style={{fontWeight: '500', color: '#111827', margin: 0, textTransform: 'capitalize'}}>{platform.name}</h3>
-                        <span style={{
-                          ...platform.score >= 80 ? styles.badgeSuccess :
-                          platform.score >= 60 ? styles.badgeWarning : styles.badgeError
-                        }}>
-                          {platform.score?.toFixed(0)}% Match
-                        </span>
-                      </div>
-                      <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', fontSize: '0.875rem'}}>
-                        <div>
-                          <span style={{color: '#6b7280'}}>Products:</span>
-                          <span style={{marginLeft: '0.25rem', fontWeight: '500'}}>{platform.products}</span>
-                        </div>
-                        <div>
-                          <span style={{color: '#6b7280'}}>Competition:</span>
-                          <span style={{marginLeft: '0.25rem', fontWeight: '500'}}>{platform.competition}</span>
-                        </div>
-                        <div>
-                          <span style={{color: '#6b7280'}}>Avg Rating:</span>
-                          <span style={{marginLeft: '0.25rem', fontWeight: '500'}}>{platform.rating?.toFixed(1) || 'N/A'}</span>
-                        </div>
-                        <div>
-                          <span style={{color: '#6b7280'}}>Engagement:</span>
-                          <span style={{marginLeft: '0.25rem', fontWeight: '500'}}>{platform.engagement?.toFixed(1) || 'N/A'}%</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div style={{...styles.textCenter, padding: '2rem'}}>
-                  <BarChart3 size={48} color="#d1d5db" style={{margin: '0 auto 0.75rem'}} />
-                  <p style={{color: '#6b7280'}}>Platform analysis will appear here after business setup</p>
-                </div>
-              )}
-            </div>
-
-            {/* Business Insights */}
-            <div style={styles.card}>
-              <div style={{...styles.flex, marginBottom: '1rem'}}>
-                <Target size={24} color="#059669" style={{marginRight: '0.5rem'}} />
-                <h2 style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0}}>Growth Insights</h2>
-              </div>
-              
-              {insights.length > 0 ? (
-                <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-                  {insights.slice(0, 3).map((insight, index) => (
-                    <div key={index} style={{border: '1px solid #e5e7eb', borderRadius: '8px', padding: '1rem'}}>
-                      <div style={{...styles.flexBetween, marginBottom: '0.5rem'}}>
-                        <h3 style={{fontWeight: '500', color: '#111827', margin: 0}}>{insight.data?.title}</h3>
-                        <span style={styles.badgeInfo}>
-                          {insight.confidence}% confidence
-                        </span>
-                      </div>
-                      
-                      {insight.data?.recommendations && (
-                        <ul style={{fontSize: '0.875rem', color: '#6b7280', margin: '0.5rem 0', paddingLeft: '1rem'}}>
-                          {insight.data.recommendations.slice(0, 2).map((rec, i) => (
-                            <li key={i} style={{marginBottom: '0.25rem'}}>
-                              {rec}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      
-                      {insight.data?.action_items && (
-                        <ul style={{fontSize: '0.875rem', color: '#6b7280', margin: '0.5rem 0 0 0', paddingLeft: '0', listStyle: 'none'}}>
-                          {insight.data.action_items.slice(0, 2).map((action, i) => (
-                            <li key={i} style={{...styles.flex, marginBottom: '0.25rem'}}>
-                              <CheckCircle size={12} color="#059669" style={{marginRight: '0.5rem', marginTop: '0.125rem', flexShrink: 0}} />
-                              <span>{action}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div style={{...styles.textCenter, padding: '2rem'}}>
-                  <Target size={48} color="#d1d5db" style={{margin: '0 auto 0.75rem'}} />
-                  <p style={{color: '#6b7280'}}>Growth insights will appear here after analysis</p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Quick Stats */}
-          <div style={{...styles.grid4, marginBottom: '1.5rem'}}>
-            <div style={{...styles.cardSmall, ...styles.textCenter}}>
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: '#2563eb'}}>{analytics.length}</div>
-              <div style={{fontSize: '0.875rem', color: '#6b7280'}}>Platforms Analyzed</div>
-            </div>
-            <div style={{...styles.cardSmall, ...styles.textCenter}}>
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: '#059669'}}>
-                {analytics.find(p => p.score >= 80) ? '✓' : '⏳'}
-              </div>
-              <div style={{fontSize: '0.875rem', color: '#6b7280'}}>High-Match Platform</div>
-            </div>
-            <div style={{...styles.cardSmall, ...styles.textCenter}}>
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: '#7c3aed'}}>{insights.length}</div>
-              <div style={{fontSize: '0.875rem', color: '#6b7280'}}>Growth Insights</div>
-            </div>
-            <div style={{...styles.cardSmall, ...styles.textCenter}}>
-              <div style={{fontSize: '2rem', fontWeight: 'bold', color: '#ea580c'}}>
-                {analytics.reduce((sum, p) => sum + (p.products || 0), 0)}
-              </div>
-              <div style={{fontSize: '0.875rem', color: '#6b7280'}}>Products Analyzed</div>
-            </div>
-          </div>
-
-          {/* Detailed Analytics */}
-          <div style={styles.card}>
-            <div style={{...styles.flexBetween, marginBottom: '1.5rem'}}>
-              <div style={styles.flex}>
-                <PieChart size={24} color="#7c3aed" style={{marginRight: '0.5rem'}} />
-                <h2 style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0}}>Detailed Platform Analysis</h2>
-              </div>
-              <button
-                onClick={() => business?.id && loadDashboardData(business.id)}
-                disabled={isAnalyzing}
-                style={{
-                  ...styles.btnPrimary,
-                  width: 'auto',
-                  opacity: isAnalyzing ? 0.5 : 1,
-                  cursor: isAnalyzing ? 'not-allowed' : 'pointer'
-                }}
-                className="btn-primary"
-              >
-                {isAnalyzing ? 'Analyzing...' : 'Refresh Analysis'}
-              </button>
-            </div>
-
-            {analytics.length > 0 ? (
-              <div style={{overflowX: 'auto'}}>
-                <table style={styles.table}>
-                  <thead>
-                    <tr>
-                      <th style={styles.tableHeader}>Platform</th>
-                      <th style={styles.tableHeader}>Match Score</th>
-                      <th style={styles.tableHeader}>Products</th>
-                      <th style={styles.tableHeader}>Avg Rating</th>
-                      <th style={styles.tableHeader}>Competition</th>
-                      <th style={styles.tableHeader}>Recommendation</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {analytics.map((platform, index) => (
-                      <tr key={index} style={styles.tableRow} className="table-row">
-                        <td style={styles.tableCell}>
-                          <div style={styles.flex}>
-                            <div style={{
-                              width: '12px',
-                              height: '12px',
-                              borderRadius: '50%',
-                              marginRight: '0.5rem',
-                              backgroundColor: 
-                                platform.name === 'amazon' ? '#ff9900' :
-                                platform.name === 'flipkart' ? '#f0b90b' :
-                                platform.name === 'instagram' ? '#e4405f' :
-                                platform.name === 'youtube' ? '#ff0000' : '#2563eb'
-                            }}></div>
-                            <span style={{fontWeight: '500', textTransform: 'capitalize'}}>{platform.name}</span>
-                          </div>
-                        </td>
-                        <td style={styles.tableCell}>
-                          <span style={{
-                            ...platform.score >= 80 ? styles.badgeSuccess :
-                            platform.score >= 60 ? styles.badgeWarning : styles.badgeError
-                          }}>
-                            {platform.score?.toFixed(0)}%
-                          </span>
-                        </td>
-                        <td style={styles.tableCell}>{platform.products || 0}</td>
-                        <td style={styles.tableCell}>
-                          {platform.rating ? `${platform.rating.toFixed(1)}/5.0` : 'N/A'}
-                        </td>
-                        <td style={styles.tableCell}>
-                          <span style={{
-                            ...platform.competition === 'Low' ? styles.badgeSuccess :
-                            platform.competition === 'Medium' ? styles.badgeWarning : styles.badgeError
-                          }}>
-                            {platform.competition}
-                          </span>
-                        </td>
-                        <td style={styles.tableCell}>
-                          {platform.score >= 80 ? (
-                            <span style={{color: '#059669', fontWeight: '500'}}>Highly Recommended</span>
-                          ) : platform.score >= 60 ? (
-                            <span style={{color: '#d97706', fontWeight: '500'}}>Consider</span>
-                          ) : (
-                            <span style={{color: '#dc2626', fontWeight: '500'}}>Low Priority</span>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <div style={{...styles.textCenter, padding: '3rem'}}>
-                <BarChart3 size={64} color="#d1d5db" style={{margin: '0 auto 1rem'}} />
-                <h3 style={{fontSize: '1.125rem', fontWeight: '500', color: '#374151', margin: '0 0 0.5rem 0'}}>No Analytics Data Yet</h3>
-                <p style={{color: '#6b7280', margin: '0 0 1rem 0'}}>Click "Refresh Analysis" to start analyzing your market</p>
-                <button
-                  onClick={() => business?.id && loadDashboardData(business.id)}
-                  style={styles.btnPrimary}
-                  className="btn-primary"
-                >
-                  Start Analysis
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Growth Tips */}
-          {insights.length > 0 && (
-            <div style={{...styles.card, marginTop: '1.5rem'}}>
-              <div style={{...styles.flex, marginBottom: '1rem'}}>
-                <Target size={24} color="#059669" style={{marginRight: '0.5rem'}} />
-                <h2 style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0}}>Personalized Growth Tips</h2>
-              </div>
-              
-              <div style={styles.grid2}>
-                {insights.slice(0, 4).map((insight, index) => (
-                  <div key={index} style={{
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '8px',
-                    padding: '1rem',
-                    transition: 'box-shadow 0.2s',
-                    ':hover': {boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'}
-                  }}>
-                    <div style={{...styles.flexBetween, marginBottom: '0.75rem'}}>
-                      <h3 style={{fontWeight: '500', color: '#111827', margin: 0}}>{insight.data?.title}</h3>
-                      <span style={styles.badgeInfo}>
-                        {insight.confidence}% confidence
-                      </span>
-                    </div>
-                    
-                    {insight.data?.action_items && (
-                      <ul style={{margin: 0, paddingLeft: 0, listStyle: 'none'}}>
-                        {insight.data.action_items.slice(0, 3).map((action, i) => (
-                          <li key={i} style={{...styles.flex, fontSize: '0.875rem', color: '#6b7280', marginBottom: '0.5rem'}}>
-                            <CheckCircle size={16} color="#10b981" style={{marginRight: '0.5rem', marginTop: '0.125rem', flexShrink: 0}} />
-                            <span>{action}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    
-                    {insight.data?.recommendations && (
-                      <ul style={{margin: '0.75rem 0 0 0', paddingLeft: 0, listStyle: 'none'}}>
-                        {insight.data.recommendations.slice(0, 2).map((rec, i) => (
-                          <li key={i} style={{...styles.flex, fontSize: '0.875rem', color: '#6b7280', marginBottom: '0.5rem'}}>
-                            <Target size={16} color="#3b82f6" style={{marginRight: '0.5rem', marginTop: '0.125rem', flexShrink: 0}} />
-                            <span>{rec}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
+  return (
+    <DashboardPage
+      styles={styles}
+      business={business}
+      user={user}
+      analytics={analytics}
+      insights={insights}
+      isAnalyzing={isAnalyzing}
+      handleLogout={handleLogout}
+      loadDashboardData={loadDashboardData}
+      setCurrentPage={setCurrentPage}
+    />
+  );
+}
 
   return (
     <div style={{...styles.gradientBg, ...styles.flexCenter}}>
-      <div style={styles.textCenter}>
-        <Loader style={styles.spin} size={48} color="#2563eb" />
-        <p style={{color: '#6b7280', marginTop: '1rem'}}>Loading...</p>
-      </div>
+     <div style={{
+  textAlign: 'center',
+  fontFamily: 'Inter, Playfair Display, serif, system-ui, sans-serif',
+  color: '#22223b'
+}}>
+  <Loader style={{animation: 'spin 1s linear infinite'}} size={48} color="#c9ada7" />
+  <p style={{color: '#6b7280', marginTop: '1rem', fontSize: '1.1rem'}}>Loading...</p>
+</div>
     </div>
   );
 }
