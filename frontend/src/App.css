@@ -1,0 +1,313 @@
+/* ------------------------------
+   BizzBoost - App.css (Dark + Parallax)
+   ------------------------------ */
+
+/* Theme tokens */
+:root {
+  --bg-0: #000000;
+  --bg-1: #0b0b0f;
+  --bg-2: #111118;
+  --bg-3: #1a1a22;
+
+  --text-0: #ffffff;
+  --text-1: #c7c9d1;
+  --text-2: #9aa0aa;
+
+  --primary: #6ea8ff;   /* blue */
+  --secondary: #b388ff; /* purple */
+  --accent: #ff72d2;    /* pink */
+
+  --success: #34d399;
+  --danger: #f87171;
+
+  --ring: rgba(110, 168, 255, 0.35);
+  --card: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.08);
+
+  --shadow-1: 0 10px 30px rgba(0,0,0,0.45);
+  --shadow-2: 0 20px 50px rgba(0,0,0,0.55);
+}
+
+/* Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg-0);
+}
+
+body {
+  color: var(--text-0);
+  font-smooth: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utility: gradient text like your logo/headers */
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.text-transparent {
+  color: transparent !important;
+}
+
+/* Utility: subtle glass for cards */
+.bb-glass {
+  background: var(--card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-1);
+}
+
+/* Utility: soft glow on hover/focus */
+.bb-glow {
+  transition: box-shadow 250ms ease, transform 250ms ease, border-color 250ms ease;
+}
+.bb-glow:hover,
+.bb-glow:focus {
+  box-shadow: 0 0 0 8px var(--ring), var(--shadow-2);
+  transform: translateY(-2px);
+}
+
+/* Header blur fallback (works even without Tailwind) */
+.backdrop-blur-md {
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+}
+
+/* Hero gradient + parallax helpers */
+.bb-hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(1200px 800px at 80% -10%, rgba(110,168,255,0.15), transparent 60%),
+              radial-gradient(900px 600px at -10% 110%, rgba(179,136,255,0.12), transparent 60%),
+              linear-gradient(135deg, var(--bg-1), var(--bg-0));
+}
+
+/* Floating “blob” accents (you already render these divs; this styles/animates them) */
+.bb-blob {
+  border-radius: 9999px;
+  filter: blur(42px);
+  animation: blob-pulse 6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.bb-blob--delay {
+  animation-delay: 1s;
+}
+
+@keyframes blob-pulse {
+  0%, 100% { transform: translate3d(0,0,0) scale(1); opacity: 0.7; }
+  50%      { transform: translate3d(0,10px,0) scale(1.06); opacity: 0.9; }
+}
+
+/* Animate in (for your hero title) */
+.animate-fade-in {
+  animation: fade-in 900ms ease-out both;
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Pulse (if Tailwind isn't present) */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(.4,0,.6,1) infinite;
+}
+@keyframes pulse {
+  50% { opacity: .5; }
+}
+
+/* Scroll marquee for platforms */
+.animate-scroll {
+  animation: marquee 22s linear infinite;
+  will-change: transform;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Trend cards */
+.bb-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-1);
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+.bb-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(110,168,255,0.45);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+}
+
+/* Percentage color helpers (used in trends) */
+.bb-percent--up    { color: var(--success); }
+.bb-percent--down  { color: var(--danger); }
+.bb-percent--flat  { color: var(--text-2); }
+
+/* Buttons (nice gradients + hover) */
+.bb-btn-primary {
+  background-image: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  padding: 0.95rem 1.25rem;
+  font-weight: 650;
+  letter-spacing: .2px;
+  box-shadow: 0 10px 25px rgba(99,102,241,0.25);
+  transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+}
+.bb-btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(99,102,241,0.35);
+  filter: brightness(1.05);
+}
+.bb-btn-ghost {
+  background: var(--bg-2);
+  color: var(--text-0);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 0.95rem 1.25rem;
+  font-weight: 650;
+  transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+.bb-btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.18);
+  background: var(--bg-3);
+}
+
+/* Links */
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover {
+  color: #a7c5ff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Footer */
+footer {
+  background: #000;
+  border-top: 1px solid var(--border);
+}
+
+/* Section backgrounds (complimenting your Tailwind classes) */
+.bb-section--gradient-b {
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+}
+.bb-section--gradient {
+  background: linear-gradient(180deg, var(--bg-2), var(--bg-3));
+}
+
+/* Subtle separators for containers */
+.container {
+  max-width: 1200px;
+}
+
+/* Custom scrollbar (dark) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2f3340 transparent;
+}
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: #2f3340;
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #3a3f4f;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+  border-radius: 10px;
+}
+
+/* Media queries for nicer scaling */
+@media (max-width: 1024px) {
+  .bb-hero h1 {
+    font-size: clamp(2.25rem, 6vw, 3.75rem);
+  }
+}
+@media (max-width: 640px) {
+  .bb-hero h1 {
+    font-size: clamp(1.9rem, 8vw, 3rem);
+  }
+}
+
+/* Reduce motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll,
+  .animate-fade-in,
+  .animate-pulse,
+  .bb-blob {
+    animation: none !important;
+  }
+}
+
+/* ---- Optional: tiny helpers you can add in JSX if desired ---- */
+
+/* Apply to the hero section wrapper for extra depth (optional) */
+.bb-parallax {
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+.bb-parallax__layer--bg {
+  transform: translateZ(-150px) scale(1.2);
+}
+.bb-parallax__layer--mid {
+  transform: translateZ(-60px) scale(1.08);
+}
+.bb-parallax__layer--fg {
+  transform: translateZ(0);
+}
+
+/* “Neon” border accent (optional) */
+.bb-neon {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.bb-neon::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from 180deg,
+    #3b82f6,
+    #8b5cf6,
+    #ff72d2,
+    #3b82f6
+  );
+  filter: blur(18px);
+  opacity: .18;
+  z-index: -1;
+}
+
+/* Spin (for your RefreshCw icon fallback text) */
+.bb-spin {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
