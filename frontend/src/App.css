@@ -346,3 +346,96 @@
   max-width: 800px;
   margin: 0 auto 40px;
 }
+/* Header */
+.header {
+  padding: 25px 0; /* Increased from 20px to 25px for more height */
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(10, 10, 10, 0.8); /* Semi-transparent dark background */
+  backdrop-filter: blur(5px); /* Frosted glass effect */
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px; /* Add max-width for better control */
+  margin: 0 auto; /* Center the container */
+  padding: 0 20px; /* Add horizontal padding */
+}
+
+.logo {
+  font-size: 1.8em;
+  font-weight: 800;
+  color: var(--color-light-text);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none; /* Remove underline from logo link */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px; /* Use gap instead of margin for better spacing control */
+}
+
+.nav-links a, 
+.nav-links .link {
+  color: var(--color-gray-text);
+  font-size: 1.1em;
+  text-decoration: none;
+  padding: 8px 16px; /* Add padding for better click area */
+  border-radius: 6px; /* Subtle rounded corners */
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-links a:hover, 
+.nav-links .link:hover {
+  color: var(--color-accent-blue);
+  background-color: rgba(0, 123, 255, 0.1); /* Subtle background on hover */
+  transform: translateY(-1px); /* Subtle lift effect */
+}
+.temp{
+  font-size: 2.6rem;
+}
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .header {
+    padding: 20px 0; /* Slightly reduce padding on mobile */
+  }
+  
+  .header .container {
+    flex-direction: column;
+    gap: 20px; /* Increased gap between logo and nav on mobile */
+    padding: 0 15px;
+  }
+
+  .nav-links {
+    gap: 25px; /* Reduce gap on mobile but keep good spacing */
+  }
+
+  .nav-links a, 
+  .nav-links .link {
+    padding: 6px 12px;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links {
+    gap: 20px; /* Further reduce gap on very small screens */
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    justify-content: center;
+  }
+
+  .nav-links a, 
+  .nav-links .link {
+    padding: 5px 10px;
+    font-size: 0.9em;
+  }
+}

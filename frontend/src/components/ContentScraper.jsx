@@ -40,26 +40,7 @@ function ContentScraper({ onContentScraped }) {
 
   return (
     <div className="content-scraper panel">
-      <h2>Web Content Scraper (Portia-like)</h2>
-      <p style={{ fontSize: '0.9em', color: '#555' }}>
-        Enter a URL to automatically extract text for your design.
-      </p>
-      <div>
-        <label htmlFor="scrapeUrl">URL to Scrape:</label>
-        <input
-          type="text"
-          id="scrapeUrl"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="e.g., https://example.com/blog-post"
-          disabled={loading}
-        />
-      </div>
-      <button onClick={handleScrape} disabled={loading}>
-        {loading ? 'Scraping...' : 'Scrape Content'}
-      </button>
-      {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
-    </div>
+          </div>
   );
 }
 

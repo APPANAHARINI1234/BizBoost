@@ -37,7 +37,7 @@ function HomePageContent() {
               </p>
             </div>
             <div className="feature-card">
-              <h3>Margin & Sales Analysis</h3>
+              <h3>Margin and Sales Analysis</h3>
               <p>
                 Get realistic insights into potential profit margins and historical sales data for your products on various platforms.
                 We show you how many sales have happened and if it's truly worth your investment.
@@ -46,8 +46,8 @@ function HomePageContent() {
             <div className="feature-card">
               <h3>Data-Driven Decisions (Powered by Portia AI)</h3>
               <p>
-                Our core strength lies in **Portia AI's robust web scraping capabilities**. We extract
-                **realistic, up-to-date information directly from platforms** to ensure you have
+                Our core strength lies in Portia AI's robust web scraping capabilities. We extract
+                realistic, up-to-date information directly from platforms to ensure you have
                 the most accurate data for your business strategy.
               </p>
             </div>
@@ -71,10 +71,10 @@ function HomePageContent() {
               </p>
             </div>
             <div className="feature-card">
-              <h3>Seamless Sharing & Automation (Powered by Portia AI)</h3>
+              <h3>Seamless Sharing and Automation Powered by Portia AI</h3>
               <p>
                 Share your customized assets directly to WhatsApp, Facebook, and Instagram.
-                **Portia AI enables intelligent automation**, allowing you to schedule and
+                Portia AI enables intelligent automation, allowing you to schedule and
                 even prompt users to send personalized intro messages to their customers,
                 maximizing your reach with minimal effort.
               </p>
@@ -95,12 +95,12 @@ function HomePageContent() {
         <div className="container text-center">
           <h2 className="section-title">Grogent is Powered by Portia AI</h2>
           <p className="section-subtitle">
-            Portia's advanced Model Context Protocol (MCP) is the engine behind Grogent's powerful
+            Portia's advanced Model Context Protocol  is the engine behind Grogent's powerful
             data scraping, market analysis, and intelligent marketing automation capabilities.
             We leverage Portia to bring you unparalleled accuracy and efficiency.
           </p>
           {/* Placeholder for Portia Logo */}
-          <img src="https://docs.portialabs.ai/img/logo.svg" alt="Portia AI Logo" className="portia-logo" />
+          
         </div>
       </section>
 
@@ -122,11 +122,7 @@ function HomePageContent() {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="footer">
-        <div className="container">
-          <p>&copy; {new Date().getFullYear()} Grogent. All rights reserved. Powered by Portia AI.</p>
-        </div>
-      </footer>
+      
     </>
   );
 }

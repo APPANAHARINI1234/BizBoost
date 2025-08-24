@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Analysis.css';
+import './Analysis.css'; // Import the new CSS file
 import { 
   Search, 
   TrendingUp, 
@@ -24,7 +24,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'http://localhost:8000'; // Frontend expects backend on port 8000
 
 // Utility function for API calls
 const apiCall = async (endpoint, options = {}) => {
@@ -51,7 +51,7 @@ const platformIcons = {
   'YouTube': Youtube,
   'LinkedIn': Linkedin,
   'TikTok': () => (
-    <div className="w-5 h-5 bg-black rounded flex items-center justify-center text-white text-xs font-bold">
+    <div className="platform-tiktok-icon">
       T
     </div>
   )
@@ -100,22 +100,22 @@ const BusinessAnalysisForm = ({ onSubmit, isLoading }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
-      <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+    <div className="analysis-form-card">
+      <div className="form-header">
+        <div className="form-header-icon-wrapper">
           <Search size={32} color="white" />
         </div>
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Analyze Your Business Idea</h2>
-        <p className="text-gray-600">Get comprehensive insights and social media recommendations powered by Gemini AI</p>
+        <h2 className="form-title">Analyze Your Business Idea</h2>
+        <p className="form-subtitle">Get comprehensive insights and social media recommendations powered by Gemini AI</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="form-fields-group">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="form-label">
             Business Idea *
           </label>
           <textarea
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            className="form-textarea"
             rows={4}
             placeholder="Describe your business idea in detail..."
             value={formData.business_idea}
@@ -124,14 +124,14 @@ const BusinessAnalysisForm = ({ onSubmit, isLoading }) => {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="form-grid-2-cols">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="form-label">
               Target Audience *
             </label>
             <input
               type="text"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="form-input"
               placeholder="e.g., Young professionals aged 25-35"
               value={formData.target_audience}
               onChange={(e) => setFormData({...formData, target_audience: e.target.value})}
@@ -140,11 +140,11 @@ const BusinessAnalysisForm = ({ onSubmit, isLoading }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="form-label">
               Industry *
             </label>
             <select
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="form-select"
               value={formData.industry}
               onChange={(e) => setFormData({...formData, industry: e.target.value})}
               required
@@ -157,14 +157,14 @@ const BusinessAnalysisForm = ({ onSubmit, isLoading }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="form-grid-2-cols">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="form-label">
               Location
             </label>
             <input
               type="text"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="form-input"
               placeholder="e.g., United States, Europe, Global"
               value={formData.location}
               onChange={(e) => setFormData({...formData, location: e.target.value})}
@@ -172,11 +172,11 @@ const BusinessAnalysisForm = ({ onSubmit, isLoading }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="form-label">
               Budget Range
             </label>
             <select
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="form-select"
               value={formData.budget_range}
               onChange={(e) => setFormData({...formData, budget_range: e.target.value})}
             >
@@ -188,29 +188,29 @@ const BusinessAnalysisForm = ({ onSubmit, isLoading }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">
+          <label className="form-label">
             Goals (Select all that apply)
           </label>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div className="form-checkbox-grid">
             {goalOptions.map(goal => (
-              <label key={goal} className="flex items-center space-x-2 cursor-pointer">
+              <label key={goal} className="checkbox-item">
                 <input
                   type="checkbox"
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="checkbox-input"
                   checked={formData.goals.includes(goal)}
                   onChange={(e) => handleGoalChange(goal, e.target.checked)}
                 />
-                <span className="text-sm text-gray-700">{goal}</span>
+                <span className="checkbox-text">{goal}</span>
               </label>
             ))}
           </div>
         </div>
 
-        <div className="pt-4">
+        <div className="form-submit-wrapper">
           <button
             type="submit"
             disabled={isLoading || !formData.business_idea || !formData.target_audience || !formData.industry}
-            className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium py-3 px-6 rounded-lg hover:from-blue-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+            className="form-submit-button"
           >
             {isLoading ? (
               <>
@@ -233,7 +233,7 @@ const BusinessAnalysisForm = ({ onSubmit, isLoading }) => {
 // Analysis Status Component
 const AnalysisStatus = ({ status, onRefresh }) => {
   const getStatusIcon = () => {
-    const iconProps = { size: 24, className: getStatusIconClass() };
+    const iconProps = { size: 24, className: `status-icon ${status.status.replace('_', '-')}` };
     switch (status.status) {
       case 'pending':
         return <Clock {...iconProps} />;
@@ -248,68 +248,47 @@ const AnalysisStatus = ({ status, onRefresh }) => {
     }
   };
 
-  const getStatusIconClass = () => {
-    switch (status.status) {
-      case 'pending': return 'text-yellow-500';
-      case 'in_progress': return 'text-blue-500';
-      case 'completed': return 'text-green-500';
-      case 'failed': return 'text-red-500';
-      default: return 'text-gray-500';
-    }
-  };
-
-  const getStatusCardClass = () => {
-    const baseClass = 'bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto';
-    switch (status.status) {
-      case 'pending': return `${baseClass} border-l-4 border-yellow-500`;
-      case 'in_progress': return `${baseClass} border-l-4 border-blue-500`;
-      case 'completed': return `${baseClass} border-l-4 border-green-500`;
-      case 'failed': return `${baseClass} border-l-4 border-red-500`;
-      default: return `${baseClass} border-l-4 border-gray-500`;
-    }
-  };
-
   return (
-    <div className="space-y-6">
-      <div className={getStatusCardClass()}>
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
+    <div className="analysis-status-container">
+      <div className={`status-card ${status.status.replace('_', '-')}`}>
+        <div className="status-header">
+          <div className="status-header-left">
             {getStatusIcon()}
-            <h3 className="text-xl font-semibold text-gray-800">Analysis Status</h3>
+            <h3 className="status-title">Analysis Status</h3>
           </div>
           <button
             onClick={onRefresh}
-            className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            className="status-refresh-button"
             title="Refresh status"
           >
             <RefreshCw size={16} />
           </button>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-gray-600">Status:</span>
-            <span className="text-sm font-semibold capitalize text-gray-800">
+        <div className="status-details-group">
+          <div className="status-detail-item">
+            <span className="status-detail-label">Status:</span>
+            <span className="status-detail-value">
               {status.status.replace('_', ' ')}
             </span>
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-gray-600">Progress:</span>
-              <span className="text-sm font-semibold text-gray-800">{status.progress}%</span>
+            <div className="status-detail-item">
+              <span className="status-detail-label">Progress:</span>
+              <span className="status-detail-value">{status.progress}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="progress-bar-wrapper">
               <div 
-                className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
+                className="progress-bar-fill"
                 style={{ width: `${status.progress}%` }}
               />
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-gray-600">Current Step:</span>
-            <span className="text-sm font-semibold text-gray-800 text-right">
+          <div className="status-detail-item">
+            <span className="status-detail-label">Current Step:</span>
+            <span className="status-detail-value">
               {status.current_step}
             </span>
           </div>
@@ -325,74 +304,74 @@ const PlatformCard = ({ platform }) => {
   
   const getPriorityClass = () => {
     switch (platform.priority) {
-      case 'high': return 'bg-red-100 text-red-800 border border-red-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border border-yellow-200';
-      case 'low': return 'bg-green-100 text-green-800 border border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border border-gray-200';
+      case 'high': return 'high';
+      case 'medium': return 'medium';
+      case 'low': return 'low';
+      default: return 'default';
     }
   };
 
-  const getCompetitionColor = () => {
+  const getCompetitionClass = () => {
     switch (platform.competition_level) {
-      case 'low': return 'text-green-600';
-      case 'medium': return 'text-yellow-600';
-      case 'high': return 'text-red-600';
-      default: return 'text-gray-600';
+      case 'low': return 'low-competition';
+      case 'medium': return 'medium-competition';
+      case 'high': return 'high-competition';
+      default: return '';
     }
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+    <div className="platform-card">
+      <div className="platform-card-header">
+        <div className="platform-card-header-left">
+          <div className="platform-card-icon-wrapper">
             <IconComponent size={24} color="white" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-800">{platform.platform}</h3>
-            <span className={`text-xs font-medium px-2 py-1 rounded-full ${getPriorityClass()}`}>
+            <h3 className="platform-card-title">{platform.platform}</h3>
+            <span className={`platform-priority-tag ${getPriorityClass()}`}>
               {platform.priority.toUpperCase()} PRIORITY
             </span>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="text-center p-3 bg-purple-50 rounded-lg">
-          <div className="flex items-center justify-center space-x-1 mb-1">
-            <Eye size={16} className="text-purple-600" />
-            <span className="text-xs font-medium text-purple-600">REACH</span>
+      <div className="platform-metrics-grid">
+        <div className="metric-item purple">
+          <div className="metric-content">
+            <Eye size={16} className="metric-icon" />
+            <span className="metric-label">REACH</span>
           </div>
-          <div className="text-xl font-bold text-purple-600">{platform.reach_potential}/10</div>
+          <div className="metric-value">{platform.reach_potential}/10</div>
         </div>
-        <div className="text-center p-3 bg-blue-50 rounded-lg">
-          <div className="flex items-center justify-center space-x-1 mb-1">
-            <MessageCircle size={16} className="text-blue-600" />
-            <span className="text-xs font-medium text-blue-600">ENGAGEMENT</span>
+        <div className="metric-item blue">
+          <div className="metric-content">
+            <MessageCircle size={16} className="metric-icon" />
+            <span className="metric-label">ENGAGEMENT</span>
           </div>
-          <div className="text-xl font-bold text-blue-600">{platform.engagement_potential}/10</div>
+          <div className="metric-value">{platform.engagement_potential}/10</div>
         </div>
       </div>
 
-      <div className="space-y-3 mb-4">
-        <div className="flex justify-between">
-          <span className="text-sm font-medium text-gray-600">Competition:</span>
-          <span className={`text-sm font-semibold capitalize ${getCompetitionColor()}`}>
+      <div className="platform-details-group">
+        <div className="platform-detail-item">
+          <span className="platform-detail-label">Competition:</span>
+          <span className={`platform-detail-value ${getCompetitionClass()}`}>
             {platform.competition_level}
           </span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-sm font-medium text-gray-600">Audience Size:</span>
-          <span className="text-sm font-semibold text-gray-800">{platform.estimated_audience_size}</span>
+        <div className="platform-detail-item">
+          <span className="platform-detail-label">Audience Size:</span>
+          <span className="platform-detail-value">{platform.estimated_audience_size}</span>
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="platform-strategy-section">
         <div>
-          <h4 className="text-sm font-semibold text-gray-700 mb-2">Content Types:</h4>
-          <div className="flex flex-wrap gap-1">
+          <h4 className="platform-strategy-heading">Content Types:</h4>
+          <div className="platform-content-types">
             {platform.content_types.map((type, index) => (
-              <span key={index} className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">
+              <span key={index} className="platform-tag purple">
                 {type}
               </span>
             ))}
@@ -400,10 +379,10 @@ const PlatformCard = ({ platform }) => {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-gray-700 mb-2">Key Demographics:</h4>
-          <div className="flex flex-wrap gap-1">
+          <h4 className="platform-strategy-heading">Key Demographics:</h4>
+          <div className="platform-key-demographics">
             {platform.key_demographics.map((demo, index) => (
-              <span key={index} className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+              <span key={index} className="platform-tag blue">
                 {demo}
               </span>
             ))}
@@ -411,8 +390,8 @@ const PlatformCard = ({ platform }) => {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-gray-700 mb-2">Strategy:</h4>
-          <p className="text-sm text-gray-600 leading-relaxed">{platform.recommended_strategy}</p>
+          <h4 className="platform-strategy-heading">Strategy:</h4>
+          <p className="platform-strategy-text">{platform.recommended_strategy}</p>
         </div>
       </div>
     </div>
@@ -422,32 +401,32 @@ const PlatformCard = ({ platform }) => {
 // Competitor Analysis Card
 const CompetitorCard = ({ competitor }) => {
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold text-gray-800 mb-1">{competitor.name}</h3>
+    <div className="competitor-card">
+      <div className="competitor-header">
+        <h3 className="competitor-name">{competitor.name}</h3>
         <a 
           href={competitor.website} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="text-blue-500 hover:text-blue-700 text-sm underline"
+          className="competitor-website"
         >
           {competitor.website}
         </a>
       </div>
 
-      <div className="space-y-4">
+      <div className="competitor-details-group">
         <div>
-          <h4 className="text-sm font-semibold text-gray-700 mb-2">Social Media Following:</h4>
-          <div className="space-y-2">
+          <h4 className="competitor-section-heading">Social Media Following:</h4>
+          <div className="social-following-list">
             {Object.entries(competitor.estimated_followers).map(([platform, followers]) => {
               const IconComponent = platformIcons[platform.charAt(0).toUpperCase() + platform.slice(1)] || Target;
               return (
-                <div key={platform} className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
+                <div key={platform} className="social-following-item">
+                  <div className="social-platform-info">
                     <IconComponent size={16} />
-                    <span className="text-sm capitalize text-gray-600">{platform}</span>
+                    <span className="social-platform-name">{platform}</span>
                   </div>
-                  <span className="text-sm font-semibold text-gray-800">
+                  <span className="social-followers-count">
                     {followers.toLocaleString()}
                   </span>
                 </div>
@@ -457,35 +436,35 @@ const CompetitorCard = ({ competitor }) => {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-gray-700 mb-2">Content Strategy:</h4>
-          <ul className="text-sm text-gray-600 space-y-1">
+          <h4 className="competitor-section-heading">Content Strategy:</h4>
+          <ul className="content-strategy-list">
             {competitor.content_strategy.map((strategy, index) => (
-              <li key={index} className="flex items-start">
-                <span className="text-blue-500 mr-2">•</span>
+              <li key={index} className="content-strategy-item">
+                <span className="content-strategy-bullet">•</span>
                 {strategy}
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="swot-grid">
           <div>
-            <h4 className="text-sm font-semibold text-green-600 mb-2">Strengths:</h4>
-            <ul className="text-xs text-gray-600 space-y-1">
+            <h4 className="competitor-section-heading strengths">Strengths:</h4>
+            <ul className="swot-list">
               {competitor.strengths.map((strength, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="text-green-500 mr-1">+</span>
+                <li key={index} className="swot-item">
+                  <span className="swot-bullet strength">+</span>
                   {strength}
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-red-600 mb-2">Weaknesses:</h4>
-            <ul className="text-xs text-gray-600 space-y-1">
+            <h4 className="competitor-section-heading weaknesses">Weaknesses:</h4>
+            <ul className="swot-list">
               {competitor.weaknesses.map((weakness, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="text-red-500 mr-1">-</span>
+                <li key={index} className="swot-item">
+                  <span className="swot-bullet weakness">-</span>
                   {weakness}
                 </li>
               ))}
@@ -500,55 +479,55 @@ const CompetitorCard = ({ competitor }) => {
 // Results Display Component
 const AnalysisResults = ({ results }) => {
   return (
-    <div className="space-y-8">
+    <div className="analysis-results-container">
       {/* Header */}
-      <div className="text-center bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Analysis Results</h2>
-        <p className="text-gray-600 max-w-3xl mx-auto">{results.business_idea}</p>
+      <div className="results-header-card">
+        <h2 className="results-header-title">Analysis Results</h2>
+        <p className="results-header-subtitle">{results.business_idea}</p>
       </div>
 
       {/* Industry Overview */}
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-            <TrendingUp size={24} className="text-purple-600" />
+      <div className="results-section">
+        <div className="results-section-header">
+          <div className="results-section-icon-wrapper purple">
+            <TrendingUp size={24} className="icon" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-800">Industry Overview</h3>
+          <h3 className="results-section-title">Industry Overview</h3>
         </div>
-        <div className="bg-gray-50 rounded-lg p-6">
-          <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+        <div className="content-block">
+          <p className="content-block-text">
             {results.industry_overview}
           </p>
         </div>
       </div>
 
       {/* Target Audience Insights */}
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-            <Users size={24} className="text-blue-600" />
+      <div className="results-section">
+        <div className="results-section-header">
+          <div className="results-section-icon-wrapper blue">
+            <Users size={24} className="icon" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-800">Target Audience Insights</h3>
+          <h3 className="results-section-title">Target Audience Insights</h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="insights-grid">
           {results.target_audience_insights.map((insight, index) => (
-            <div key={index} className="flex items-start space-x-3 p-4 bg-blue-50 rounded-lg">
-              <Star size={20} className="text-blue-500 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-700">{insight}</span>
+            <div key={index} className="insight-item blue">
+              <Star size={20} className="insight-item-icon" />
+              <span className="insight-item-text">{insight}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Platform Recommendations */}
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-            <Target size={24} className="text-green-600" />
+      <div className="results-section">
+        <div className="results-section-header">
+          <div className="results-section-icon-wrapper green">
+            <Target size={24} className="icon" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-800">Platform Recommendations</h3>
+          <h3 className="results-section-title">Platform Recommendations</h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="insights-grid lg-cols-3"> {/* Added lg-cols-3 for larger screens */}
           {results.platform_recommendations.map((platform, index) => (
             <PlatformCard key={index} platform={platform} />
           ))}
@@ -556,14 +535,14 @@ const AnalysisResults = ({ results }) => {
       </div>
 
       {/* Competitor Analysis */}
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
-            <BarChart3 size={24} className="text-orange-600" />
+      <div className="results-section">
+        <div className="results-section-header">
+          <div className="results-section-icon-wrapper orange">
+            <BarChart3 size={24} className="icon" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-800">Competitor Analysis</h3>
+          <h3 className="results-section-title">Competitor Analysis</h3>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="insights-grid lg-cols-2"> {/* Added lg-cols-2 for larger screens */}
           {results.competitors.map((competitor, index) => (
             <CompetitorCard key={index} competitor={competitor} />
           ))}
@@ -571,38 +550,38 @@ const AnalysisResults = ({ results }) => {
       </div>
 
       {/* Key Insights */}
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
-            <Zap size={24} className="text-yellow-600" />
+      <div className="results-section">
+        <div className="results-section-header">
+          <div className="results-section-icon-wrapper yellow">
+            <Zap size={24} className="icon" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-800">Key Insights</h3>
+          <h3 className="results-section-title">Key Insights</h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="insights-grid">
           {results.key_insights.map((insight, index) => (
-            <div key={index} className="flex items-start space-x-3 p-4 bg-yellow-50 rounded-lg">
-              <Zap size={20} className="text-yellow-500 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-700">{insight}</span>
+            <div key={index} className="insight-item yellow">
+              <Zap size={20} className="insight-item-icon" />
+              <span className="insight-item-text">{insight}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Action Items */}
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-            <CheckCircle size={24} className="text-green-600" />
+      <div className="results-section">
+        <div className="results-section-header">
+          <div className="results-section-icon-wrapper green">
+            <CheckCircle size={24} className="icon" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-800">Action Items</h3>
+          <h3 className="results-section-title">Action Items</h3>
         </div>
-        <div className="space-y-3">
+        <div className="action-items-list">
           {results.action_items.map((item, index) => (
-            <div key={index} className="flex items-start space-x-4 p-4 bg-green-50 rounded-lg">
-              <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+            <div key={index} className="action-item">
+              <div className="action-item-number">
                 {index + 1}
               </div>
-              <span className="text-gray-700">{item}</span>
+              <span className="action-item-text">{item}</span>
             </div>
           ))}
         </div>
@@ -638,6 +617,7 @@ const Analysis = () => {
           }
         } catch (err) {
           console.error('Error polling status:', err);
+          setError('Failed to fetch analysis status. Please try refreshing.');
         }
       };
 
@@ -673,6 +653,7 @@ const Analysis = () => {
         setAnalysisStatus(status);
       } catch (err) {
         console.error('Error refreshing status:', err);
+        setError('Failed to refresh analysis status.');
       }
     }
   };
@@ -686,39 +667,36 @@ const Analysis = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="app-container">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <TrendingUp size={24} color="white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-800">Business Analyzer</h1>
-                <p className="text-sm text-gray-500">Powered by Gemini AI</p>
-              </div>
+      <header className="app-header">
+        <div className="app-header-content">
+          <div className="app-header-brand">
+            <div className="app-header-icon-wrapper">
+              <TrendingUp size={24} color="white" />
             </div>
-            {currentView !== 'form' && (
-              <button
-                onClick={handleStartNewAnalysis}
-                className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
-              >
-                <Search size={16} />
-                <span>New Analysis</span>
-              </button>
-            )}
+            <div>
+              <h1 className="app-header-title">Business Analyzer</h1>
+            </div>
           </div>
+          {currentView !== 'form' && (
+            <button
+              onClick={handleStartNewAnalysis}
+              className="app-header-button"
+            >
+              <Search size={16} />
+              <span>New Analysis</span>
+            </button>
+          )}
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="app-main">
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-center space-x-2">
-            <AlertCircle size={20} className="text-red-500" />
-            <span className="text-red-700">{error}</span>
+          <div className="error-banner">
+            <AlertCircle size={20} className="error-banner-icon" />
+            <span className="error-banner-text">{error}</span>
           </div>
         )}
 
@@ -735,15 +713,7 @@ const Analysis = () => {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white border-t mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center">
-            <p className="text-gray-600 font-medium">Powered by Google Gemini AI & Advanced Language Models</p>
-            <p className="text-sm text-gray-500 mt-1">Get comprehensive business analysis and social media recommendations</p>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   );
 };
