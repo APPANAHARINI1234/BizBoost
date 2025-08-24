@@ -129,13 +129,12 @@ User goal → Portia Plan → Proposed actions (UI) → Approve → Execute tool
 
 **Screens/GIFs (drop files here):**
 
-* `/docs/screens/strategy.png`
-* `/docs/screens/compose.png`
-* `/docs/screens/approve.png`
-* `/docs/screens/schedule.png`
-* `/docs/screens/inbox.png`
 
----
+
+<img width="1910" height="887" alt="Screenshot 2025-08-24 160507" src="https://github.com/user-attachments/assets/2757e887-8ce9-4d24-b169-bb7df2b7650f" />
+---<img width="1899" height="899" alt="Screenshot 2025-08-24 160939" src="https://github.com/user-attachments/assets/f27ecca6-8ba3-4512-9f3c-723887f26d84" />
+
+<img width="1855" height="785" alt="Screenshot 2025-08-24 164522" src="https://github.com/user-attachments/assets/0b7a6715-a534-4929-ab9b-11c019b05a1f" />
 
 ## Quickstart (Local)
 
