@@ -1,0 +1,121 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Darker, semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top of everything */
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: var(--panel-background);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 10px 30px var(--shadow-medium); /* More prominent shadow */
+  width: 90%;
+  max-width: 600px; /* Max width for the modal */
+  max-height: 90vh; /* Max height to prevent overflow on small screens */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Hide scrollbars if content overflows */
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid var(--border-light);
+  background-color: var(--background-light); /* Slightly different background for header */
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5em;
+  color: var(--text-dark);
+}
+
+.modal-close-button {
+  background: none;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  color: var(--text-medium);
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s ease;
+  box-shadow: none; /* Remove button shadow */
+}
+
+.modal-close-button:hover {
+  color: var(--text-dark);
+  transform: scale(1.1);
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 25px;
+  overflow-y: auto; /* Enable scrolling for content if it overflows */
+  flex-grow: 1; /* Allow body to take up available space */
+}
+
+/* Modal Footer */
+.modal-footer {
+  padding: 15px 25px;
+  border-top: 1px solid var(--border-light);
+  background-color: var(--background-light);
+  text-align: right;
+}
+
+.modal-done-button {
+  /* Inherits button styles, but can be customized */
+  padding: 10px 20px;
+  font-size: 1em;
+}
+
+
+/* Customization Panel inside Modal */
+.customization-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Spacing between input groups */
+  background-color: transparent; /* No background or shadow, modal provides it */
+  padding: 0; /* No padding, modal body provides it */
+  box-shadow: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive adjustments for modal */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 10px;
+  }
+  .modal-header h2 {
+    font-size: 1.3em;
+  }
+  .modal-close-button {
+    font-size: 1.8em;
+  }
+  .modal-body {
+    padding: 20px;
+  }
+}
